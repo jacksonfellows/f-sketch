@@ -37,3 +37,7 @@ function inv(shape) {
 function rectangle(xMin, yMin, xMax, yMax) {
     return intersection(right(xMin), intersection(left(xMax), intersection(upper(yMin), lower(yMax))));
 }
+
+function scale(sx, sy, shape) {
+    return (x, y) => shape(x/sx, y/sy);
+}
