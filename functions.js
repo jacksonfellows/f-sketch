@@ -31,7 +31,7 @@ function difference(a,b) {
 }
 
 function translate(dx,dy,shape) {
-    return (x,y) => shape(x+dx,y+dy);
+    return (x,y) => shape(x-dx,y-dy);
 }
 
 function rotate(theta,shape) {
