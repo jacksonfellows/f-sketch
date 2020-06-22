@@ -41,3 +41,11 @@ function rectangle(xMin, yMin, xMax, yMax) {
 function scale(sx, sy, shape) {
     return (x, y) => shape(x/sx, y/sy);
 }
+
+function mirror_x(shape) {
+    return scale(-1, 1, shape);
+}
+
+function mirror_y(shape){
+    return scale(1, -1, shape);
+} 
