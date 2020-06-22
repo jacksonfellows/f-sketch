@@ -26,6 +26,10 @@ function intersection(a,b) {
     return (x,y) => Math.max(a(x,y), b(x,y));
 }
 
+function difference(a,b) {
+    return intersection(a, inv(b));
+}
+
 function inv(shape) {
     return (x,y) => -shape(x,y);
 }
