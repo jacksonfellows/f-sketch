@@ -45,3 +45,15 @@ function inv(shape) {
 function rectangle(xMin, yMin, xMax, yMax) {
     return intersection(right(xMin), intersection(left(xMax), intersection(upper(yMin), lower(yMax))));
 }
+
+function scale(shape, sx, sy) {
+    return (x, y) => shape(x/sx, y/sy);
+}
+
+function mirrorX(shape){
+    return scale(shape, 1, -1);
+}
+
+function mirrorY(shape) {
+    return scale(shape, -1, 1);
+}
