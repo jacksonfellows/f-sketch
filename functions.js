@@ -38,14 +38,14 @@ function rectangle(xMin, yMin, xMax, yMax) {
     return intersection(right(xMin), intersection(left(xMax), intersection(upper(yMin), lower(yMax))));
 }
 
-function scale(sx, sy, shape) {
+function scale(shape, sx, sy) {
     return (x, y) => shape(x/sx, y/sy);
 }
 
-function mirror_x(shape) {
-    return scale(-1, 1, shape);
+function mirrorX(shape){
+    return scale(shape, 1, -1);
 }
 
-function mirror_y(shape){
-    return scale(1, -1, shape);
-} 
+function mirrorY(shape) {
+    return scale(shape, -1, 1);
+}
