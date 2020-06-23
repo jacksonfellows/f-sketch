@@ -37,3 +37,7 @@ function inv(shape) {
 function rectangle(xMin, yMin, xMax, yMax) {
     return intersection(right(xMin), intersection(left(xMax), intersection(upper(yMin), lower(yMax))));
 }
+
+function blend(a, b, m) {
+    return (x,y) => -Math.log(Math.exp (- 1/m * a(x,y)) + Math.exp(- 1/m * b(x,y) )) * m;
+}
