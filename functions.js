@@ -30,6 +30,14 @@ function difference(a,b) {
     return intersection(a, inv(b));
 }
 
+function translate(shape, dx, dy) {
+    return (x,y) => shape(x - dx, y - dy);
+}
+
+function rotate(shape, theta) {
+    return (x,y) => shape(x*Math.cos(theta) - y*Math.sin(theta), x*Math.sin(theta) + y*Math.cos(theta));
+}
+
 function inv(shape) {
     return (x,y) => -shape(x,y);
 }
