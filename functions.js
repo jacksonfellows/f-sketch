@@ -57,3 +57,7 @@ function mirrorX(shape){
 function mirrorY(shape) {
     return scale(shape, -1, 1);
 }
+
+function blend(a, b, m) {
+    return (x,y) => -Math.log(Math.exp (- 1/m * a(x,y)) + Math.exp(- 1/m * b(x,y) )) * m;
+}
