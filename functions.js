@@ -18,16 +18,24 @@ function upper(y0) {
     return (x,y) => y0 - y;
 }
 
-function union(a,b) {
+function binUnion(a,b) {
     return (x,y) => Math.min(a(x,y), b(x,y));
 }
 
-function intersection(a,b) {
+function union(...args) {
+	return args.reduce(binUnion);
+}
+
+function binIntersection(a,b) {
     return (x,y) => Math.max(a(x,y), b(x,y));
 }
 
-function difference(a,b) {
-    return intersection(a, inv(b));
+function intersection(...args) {
+	return args.reduce(binIntersection);
+}
+
+function difference(a,...rest) {
+    return intersection(a, inv(union(...rest)));
 }
 
 function translate(shape, dx, dy) {
@@ -42,8 +50,19 @@ function inv(shape) {
     return (x,y) => -shape(x,y);
 }
 
-function rectangle(xMin, yMin, xMax, yMax) {
-    return intersection(right(xMin), intersection(left(xMax), intersection(upper(yMin), lower(yMax))));
+function rect(x0, y0, x1, y1) {
+    return intersection(right(x0), left(x1), upper(y0), lower(y1));
+}
+
+function roundedRect(x0, y0, x1, y1, r) {
+	return union(
+		rect(x0 + r, y0, x1 - r, y1),
+		rect(x0, y0 + r, x1, y1 - r),
+		circle(r, x0 + r, y0 + r),
+		circle(r, x0 + r, y1 - r),
+		circle(r, x1 - r, y0 + r),
+		circle(r, x1 - r, y1 - r)
+	);
 }
 
 function scale(shape, sx, sy) {
@@ -59,5 +78,5 @@ function mirrorY(shape) {
 }
 
 function blend(a, b, m) {
-    return (x,y) => -Math.log(Math.exp (- 1/m * a(x,y)) + Math.exp(- 1/m * b(x,y) )) * m;
+    return (x,y) => -Math.log(Math.exp(-1/m * a(x,y)) + Math.exp(-1/m * b(x,y))) * m;
 }

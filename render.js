@@ -24,7 +24,7 @@ function render(shape) {
 }
 
 function doRender() {
-    drawMarchingSquares(shapesToRender.reduce(union));
+    drawMarchingSquares(union(...shapesToRender));
 }
 
 function setup() {
