@@ -1,21 +1,14 @@
 var canvas, ctx;
 
-// TODO: have an actual default system
-var defaultGridDx = 10;
-var defaultGridDy = 10;
-
-var gridDx = defaultGridDx;
-var gridDy = defaultGridDy;
-
-var defaultMinX = -10;
-var defaultMinY = -10;
-var defaultMaxX = +10;
-var defaultMaxY = +10;
-
-var minX = defaultMinX;
-var minY = defaultMinY;
-var maxX = defaultMaxX;
-var maxY = defaultMaxY;
+var DEFAULT_CONFIG = {
+    // general:
+    scaleX: 100,
+    scaleY: 100,
+    // marching squares:
+    gridDx: 5,
+    gridDy: 5
+};
+var CONFIG = Object.assign({}, DEFAULT_CONFIG); // shallow copy
 
 var shapesToRender = []
 
@@ -27,18 +20,21 @@ function doRender() {
     drawMarchingSquares(union(...shapesToRender));
 }
 
+function resizeCanvas() {
+    canvas.width = model.clientWidth - 1;
+    canvas.height = model.clientHeight - 1;
+}
+
+window.addEventListener('resize', _ => {resizeCanvas(); doRender();}, false);
+
 function setup() {
     canvas = document.getElementById('c');
     ctx = canvas.getContext('2d');
 
+
     model = document.getElementById('model');
     model.oninput = function () {
-        gridDx = defaultGridDx;
-        gridDy = defaultGridDy;
-        minX = defaultMinX;
-        minY = defaultMinY;
-        maxX = defaultMaxX;
-        maxY = defaultMaxY;
+        CONFIG = Object.assign({}, DEFAULT_CONFIG); // shallow copy
 
         shapesToRender = []
         eval(model.value);
@@ -46,10 +42,14 @@ function setup() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         doRender();
     };
+
+    resizeCanvas();
 }
 
-var toWorldX = x => (x / canvas.width) * (maxX - minX) + minX;
-var toWorldY = y => (1 - (y / canvas.height)) * (maxY - minY) + minY;
+window.onload = setup;
+
+var toWorldX = x => (x - 0.5*canvas.width) / CONFIG.scaleX;
+var toWorldY = y => (0.5*canvas.height - y) / CONFIG.scaleY;
 
 function drawBitmap(shape) {
     var imageData = ctx.createImageData(canvas.width, canvas.height);
@@ -123,18 +123,18 @@ function getDy(side, sw, se, ne, nw) {
 function drawMarchingSquares(shape) {
     ctx.strokeStyle = 'red';
 
-    var cornersWidth = Math.floor(canvas.width / gridDx) + 1;
-    var cornersHeight = Math.floor(canvas.height / gridDy) + 1;
+    var cornersWidth = Math.floor(canvas.width / CONFIG.gridDx) + 1;
+    var cornersHeight = Math.floor(canvas.height / CONFIG.gridDy) + 1;
     var row = new Float64Array(cornersWidth);
     var lastRow, lastVal;
     for (var j = 0; j < cornersHeight; ++j) {
         for (var i = 0; i < cornersWidth; ++i) {
-            var x = i * gridDx;
-            var y = j * gridDy;
+            var x = i * CONFIG.gridDx;
+            var y = j * CONFIG.gridDy;
             var val = shape(toWorldX(x), toWorldY(y));
 
             // ctx.beginPath();
-            // ctx.arc(i * gridDx, j * gridDy, 1, 2 * Math.PI, false);
+            // ctx.arc(i * CONFIG.gridDx, j * CONFIG.gridDy, 1, 2 * Math.PI, false);
             // ctx.fillStyle = val < 0 ? 'red' : 'black';
             // ctx.fill();
 
@@ -143,8 +143,8 @@ function drawMarchingSquares(shape) {
                 var edge = edges[cellI];
                 if (edge) {
                     ctx.beginPath();
-                    ctx.moveTo(gridDx * (i + getDx(edge[0], lastVal, val, lastRow[i], lastRow[i-1])), gridDy * (j + getDy(edge[0], lastVal, val, lastRow[i], lastRow[i-1])));
-                    ctx.lineTo(gridDx * (i + getDx(edge[1], lastVal, val, lastRow[i], lastRow[i-1])), gridDy * (j + getDy(edge[1], lastVal, val, lastRow[i], lastRow[i-1])));
+                    ctx.moveTo(CONFIG.gridDx * (i + getDx(edge[0], lastVal, val, lastRow[i], lastRow[i-1])), CONFIG.gridDy * (j + getDy(edge[0], lastVal, val, lastRow[i], lastRow[i-1])));
+                    ctx.lineTo(CONFIG.gridDx * (i + getDx(edge[1], lastVal, val, lastRow[i], lastRow[i-1])), CONFIG.gridDy * (j + getDy(edge[1], lastVal, val, lastRow[i], lastRow[i-1])));
                     ctx.stroke();
                 }
             }
