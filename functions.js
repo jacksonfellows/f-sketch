@@ -31,6 +31,14 @@ function threePointSegment(x0, y0, x1, y1, x2, y2) {
 	return intersection(threePointCircle(x0, y0, x1, y1, x2, y2), half(x0, y0, x2, y2, x1, y1));
 }
 
+function tri(x0, y0, x1, y1, x2, y2) {
+	return intersection(
+		half(x0, y0, x1, y1, x2, y2),
+		half(x1, y1, x2, y2, x0, y0),
+		half(x2, y2, x0, y0, x1, y1)
+	);
+}
+
 function left(x0) {
     return (x,y) => x - x0;
 }
