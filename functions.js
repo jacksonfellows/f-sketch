@@ -1,5 +1,5 @@
 function circle(r, x0, y0) {
-    return (x,y) => (x0 - x)**2 + (y0 - y)**2 - r**2;
+    return (x,y) => Math.sqrt((x0 - x)**2 + (y0 - y)**2) - r;
 }
 
 function left(x0) {
