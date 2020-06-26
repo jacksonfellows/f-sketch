@@ -67,6 +67,40 @@ function drawBitmap(shape) {
     ctx.putImageData(imageData, 0, 0);
 }
 
+function drawGradient(shape, scale, base) {
+    // TODO: bad bad bad bad
+    var imageData = ctx.createImageData(canvas.width, canvas.height);
+    var minV = Number.POSITIVE_INFINITY;
+    var maxV = Number.NEGATIVE_INFINITY;
+    for (var x = 0; x < canvas.width; ++x) {
+        for (var y = 0; y < canvas.height; ++y) {
+            var v = shape(toWorldX(x),toWorldY(y));
+            if (v < minV) {
+                minV = v;
+            }
+            if (v > maxV) {
+                maxV = v;
+            }
+        }
+    }
+    for (var x = 0; x < canvas.width; ++x) {
+        for (var y = 0; y < canvas.height; ++y) {
+            var v = shape(toWorldX(x),toWorldY(y));
+            if (scale === 'log') {
+                var c = 255 * Math.log(v - minV + 1)/Math.log(maxV - minV + 1);
+            } else {
+                var c = 255 * (v - minV)/(maxV - minV);
+            }
+            var red = y * (canvas.width * 4) + x * 4;
+            imageData.data[red]   = c;
+            imageData.data[red+1] = c;
+            imageData.data[red+2] = c;
+            imageData.data[red+3] = 255;
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
 var N = 0;
 var E = 1;
 var S = 2;
