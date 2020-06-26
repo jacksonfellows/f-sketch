@@ -17,7 +17,8 @@ function render(shape) {
 }
 
 function doRender() {
-    drawMarchingSquares(union(...shapesToRender));
+    // drawMarchingSquares(union(...shapesToRender));
+    shapesToRender.forEach(drawMarchingSquares);
 }
 
 function resizeCanvas() {
