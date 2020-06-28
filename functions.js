@@ -84,7 +84,7 @@ function translate(shape, dx, dy) {
 }
 
 function rotate(shape, theta) {
-	return (x,y) => shape(x*Math.cos(theta) - y*Math.sin(theta), x*Math.sin(theta) + y*Math.cos(theta));
+	return (x,y) => shape(x*Math.cos(-theta) - y*Math.sin(-theta), x*Math.sin(-theta) + y*Math.cos(-theta));
 }
 
 function inv(shape) {
