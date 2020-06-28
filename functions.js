@@ -44,6 +44,10 @@ function wedge(minTheta, maxTheta) {
 	return rotate((x,y) => Math.abs(Math.atan2(y,x)) - w, minTheta + w);
 }
 
+function sector(r, minTheta, maxTheta) {
+	return intersection(circle(r,0,0), wedge(minTheta, maxTheta));
+}
+
 function left(x0) {
 	return (x,y) => x - x0;
 }
