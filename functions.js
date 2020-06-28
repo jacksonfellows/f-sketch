@@ -39,8 +39,8 @@ function tri(x0, y0, x1, y1, x2, y2) {
 	);
 }
 
-function wedge(theta) {
-	return (x,y) => Math.atan2(-y,-x) - theta + Math.PI;
+function wedge(minTheta, maxTheta) {
+	return rotate((x,y) => Math.atan2(-y,-x) - (maxTheta - minTheta) + Math.PI, minTheta);
 }
 
 function left(x0) {
