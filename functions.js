@@ -99,15 +99,15 @@ function intersection(...args) {
 	return args.reduce(binIntersection);
 }
 
-function difference(a,...rest) {
-	return intersection(a, inv(union(...rest)));
-}
-
 function inv(shape) {
 	return (x,y) => -shape(x,y);
 }
 
-// TRANSFORMS
+function difference(a,...rest) {
+	return intersection(a, inv(union(...rest)));
+}
+
+// GEOMETRIC TRANSFORMS
 
 function translate(shape, dx, dy) {
 	return (x,y) => shape(x - dx, y - dy);
