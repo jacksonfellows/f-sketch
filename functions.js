@@ -40,7 +40,8 @@ function tri(x0, y0, x1, y1, x2, y2) {
 }
 
 function wedge(minTheta, maxTheta) {
-	return rotate((x,y) => Math.atan2(-y,-x) - (maxTheta - minTheta) + Math.PI, minTheta);
+	var w = 0.5*(maxTheta - minTheta);
+	return rotate((x,y) => Math.abs(Math.atan2(y,x)) - w, minTheta + w);
 }
 
 function left(x0) {
