@@ -134,3 +134,7 @@ function mirrorY(shape) {
 function blend(a, b, m) {
 	return (x,y) => -Math.log(Math.exp(-1/m * a(x,y)) + Math.exp(-1/m * b(x,y))) * m;
 }
+
+function offset(shape, o) {
+	return (x,y) => shape(x,y) - o; 
+}
