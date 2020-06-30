@@ -1,5 +1,3 @@
-var canvas, ctx;
-
 var DEFAULT_CONFIG = {
 	// general:
 	scaleX: 100,
@@ -17,16 +15,26 @@ function render(shape) {
 }
 
 function doRender() {
+	CONFIG = Object.assign({}, DEFAULT_CONFIG); // shallow copy
+
+	shapesToRender = [];
+	eval(model.value);
+
+	resizeCanvas();
 	// drawMarchingSquares(union(...shapesToRender));
 	shapesToRender.forEach(drawMarchingSquares);
 }
 
 function resizeCanvas() {
-	canvas.width = model.clientWidth - 1;
-	canvas.height = model.clientHeight - 1;
+	var parent = canvas.parentNode;
+	var styles = getComputedStyle(parent);
+	var w = parseInt(styles.getPropertyValue("width"), 10);
+	var h = parseInt(styles.getPropertyValue("height"), 10);
+	canvas.width = w;
+	canvas.height = h;
 }
 
-window.addEventListener('resize', _ => {resizeCanvas(); doRender();}, false);
+window.addEventListener('resize', doRender, false);
 
 function setup() {
 	canvas = document.getElementById('c');
@@ -34,17 +42,10 @@ function setup() {
 
 
 	model = document.getElementById('model');
-	model.oninput = function () {
-		CONFIG = Object.assign({}, DEFAULT_CONFIG); // shallow copy
+	rendering = document.getElementById('rendering');
 
-		shapesToRender = []
-		eval(model.value);
-
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		doRender();
-	};
-
-	resizeCanvas();
+	model.oninput = doRender;
+	doRender();
 }
 
 window.onload = setup;

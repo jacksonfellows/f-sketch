@@ -2,12 +2,15 @@
   <title>F-Sketch</title>
   <script src="render.js"></script>
   <script src="functions.js"></script>
+  <link rel="stylesheet" type="text/css" href="panes.css">
 </head>
+
 <body>
-  <div style="float: left; width: 50%;">
-    <textarea id="model" style="height: 100%; width: 100%;"></textarea>
-  </div>
-  <div style="float: right;">
-    <canvas id="c" style="border: 1px solid"></canvas>
+  <div class="box-wrapper">
+    <div class="boxa">
+      <textarea id="model" style="height: 100%; width: 100%;"></textarea>
+    </div>
+    <div class="boxb">interaction</div>
+    <canvas id="c" style="border: 1px solid;"></canvas>
   </div>
 </body>
