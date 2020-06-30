@@ -146,3 +146,11 @@ function blend(a, b, m) {
 function offset(shape, o) {
 	return (x,y) => shape(x,y) - o; 
 }
+
+function degToRad(deg) {
+	return deg * Math.PI/180;
+}
+
+function radToDeg(rad){
+	return rad * 180/Math.PI;
+}
