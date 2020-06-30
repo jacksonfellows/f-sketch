@@ -129,6 +129,14 @@ function mirrorY(shape) {
 	return scale(shape, -1, 1);
 }
 
+function shearY(shape, m) {
+	return (x, y) => shape(x, y-m*x)
+}
+
+function shearX(shape, m) {
+	return (x, y) => shape(x-m*y, y)
+}
+
 // OTHER
 
 function blend(a, b, m) {
