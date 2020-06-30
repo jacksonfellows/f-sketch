@@ -147,6 +147,8 @@ function offset(shape, o) {
 	return (x,y) => shape(x,y) - o; 
 }
 
+// UTILITIES
+
 function degToRad(deg) {
 	return deg * Math.PI/180;
 }
