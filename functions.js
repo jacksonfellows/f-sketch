@@ -65,6 +65,15 @@ function sector(r, minTheta, maxTheta) {
 	return intersection(circle(r,0,0), wedge(minTheta, maxTheta));
 }
 
+function roundedSector(r, minTheta, maxTheta, m) {
+	var dTheta = maxTheta - minTheta;
+	var s1 = sector(r, -dTheta/2, dTheta/2);
+	var s2 = sector(r, dTheta/2, 2*Math.PI - dTheta/2);
+	var d = inv(circle(r,0,0));
+	var cut = blend(s2,d,m);
+	return rotate(difference(s1,cut), minTheta + dTheta/2);
+}
+
 function left(x0) {
 	return (x,y) => x - x0;
 }
@@ -155,4 +164,12 @@ function degToRad(deg) {
 
 function radToDeg(rad){
 	return rad * 180/Math.PI;
+}
+
+function range(min, max, step=1) {
+	var l = [];
+	for (var i = min; i < max; i += step) {
+		l.push(i);
+	}
+	return l;
 }
