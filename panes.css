@@ -1,20 +1,13 @@
 textarea {
     resize: none;
   }
-  
+
 html, body {
     margin: 0;
     padding: 3;
     width:calc( 50vw - 9px );
     height:calc( 100vh - 9px );
   }
-
-body{
-    display:flex;
-    flex-direction:column;
-    width:calc( 50vw - 9px );
-    height:calc( 100vh - 9px );
-}
 
   .box-wrapper {
     display: flex;
