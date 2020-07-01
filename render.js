@@ -26,24 +26,17 @@ function doRender() {
 }
 
 function resizeCanvas() {
-	var parent = canvas.parentNode;
-	var styles = getComputedStyle(parent);
-	var w = parseInt(styles.getPropertyValue("width"), 10);
-	var h = parseInt(styles.getPropertyValue("height"), 10);
-	canvas.width = w;
-	canvas.height = h;
+	canvas.width = output.getBoundingClientRect().width;
+	canvas.height = output.getBoundingClientRect().height;
 }
 
 window.addEventListener('resize', doRender, false);
 
 function setup() {
+	output = document.getElementById('output');
 	canvas = document.getElementById('c');
 	ctx = canvas.getContext('2d');
-
-
 	model = document.getElementById('model');
-	rendering = document.getElementById('rendering');
-
 	model.oninput = doRender;
 	doRender();
 }

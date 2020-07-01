@@ -1,29 +1,37 @@
-textarea {
+html, body, .viewport {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.wrapper {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+
+.editor {
+	grid-column: 1;
+	grid-row: 1;
+	width: 100%;
+	height: 100%;
+}
+
+#model {
 	resize: none;
 }
 
-html, body {
-	margin: 0;
-	padding: 3;
-	width:calc( 50vw - 9px );
-	height:calc( 100vh - 9px );
+.interaction {
+	grid-column: 1;
+	grid-row: 2;
 }
 
-.box-wrapper {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	height: 100%;
-	list-style-type: none;
+.output {
+	grid-column: 2;
+	grid-row: 1 / 3;
 }
 
-.boxa,
-.boxb {
-	display:flex;
-	flex: auto;
-	width:100%;
-}
-
-canvas {
-	flex: auto;
+#c {
+	position: absolute;
 }
