@@ -1,29 +1,29 @@
 textarea {
-    resize: none;
-  }
+	resize: none;
+}
 
 html, body {
-    margin: 0;
-    padding: 3;
-    width:calc( 50vw - 9px );
-    height:calc( 100vh - 9px );
-  }
+	margin: 0;
+	padding: 3;
+	width:calc( 50vw - 9px );
+	height:calc( 100vh - 9px );
+}
 
-  .box-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100%;
-    list-style-type: none;
-  }
-  
-  .boxa,
-  .boxb {
-    display:flex;
-    flex: auto;
+.box-wrapper {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: 100%;
+	list-style-type: none;
+}
+
+.boxa,
+.boxb {
+	display:flex;
+	flex: auto;
 	width:100%;
-  }
+}
 
-  canvas {
-    flex: auto;
-  }
+canvas {
+	flex: auto;
+}
