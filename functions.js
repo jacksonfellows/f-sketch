@@ -8,6 +8,11 @@ function circle(r, x0, y0) {
 	return (x,y) => Math.sqrt((x0 - x)**2 + (y0 - y)**2) - r;
 }
 
+function nGon(n, s) {
+	var r = (s*cot(Math.PI/n))/2;
+	return intersection(...range(Math.PI,3*Math.PI,2*Math.PI/n).map(theta => rotate(lower(r),theta)));
+}
+
 function roundedRect(x0, y0, x1, y1, r) {
 	return union(
 		rect(x0 + r, y0, x1 - r, y1),
@@ -172,4 +177,8 @@ function range(min, max, step=1) {
 		l.push(i);
 	}
 	return l;
+}
+
+function cot(x) { 
+	return 1 / Math.tan(x); 
 }
