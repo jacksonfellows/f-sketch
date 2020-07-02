@@ -4,7 +4,9 @@ var DEFAULT_CONFIG = {
 	scaleY: 100,
 	// marching squares:
 	gridDx: 5,
-	gridDy: 5
+	gridDy: 5,
+	// sliders:
+	sliderStep: 0.1
 };
 var CONFIG = Object.assign({}, DEFAULT_CONFIG); // shallow copy
 
@@ -36,12 +38,49 @@ function setup() {
 	output = document.getElementById('output');
 	canvas = document.getElementById('c');
 	ctx = canvas.getContext('2d');
+	interaction = document.getElementById('interaction');
 	model = document.getElementById('model');
 	model.oninput = doRender;
 	doRender();
 }
 
 window.onload = setup;
+
+var sliders = {};
+
+function slider(name, min, max) {
+	var s;
+	if (sliders[name]) {
+		s = sliders[name].children[1];
+	} else {
+		var s = document.createElement('input');
+		s.type = 'range';
+		s.oninput = doRender;
+		s.name = name;
+
+		var l = document.createElement('label');
+		l.for = name;
+		l.innerHTML = name;
+
+		var b = document.createElement('button');
+		b.innerHTML = 'delete';
+		b.onclick = _ => {interaction.removeChild(sliders[name]); delete sliders[name];};
+
+		var sDiv = document.createElement('div');
+		sDiv.appendChild(l);
+		sDiv.appendChild(s);
+		sDiv.appendChild(b);
+		sliders[name] = sDiv;
+
+		interaction.appendChild(sDiv);
+	}
+
+	s.min = min || s.min;
+	s.max = max || s.max;
+	s.step = CONFIG.sliderStep;
+
+	return s.valueAsNumber;
+}
 
 var toWorldX = x => (x - 0.5*canvas.width) / CONFIG.scaleX;
 var toWorldY = y => (0.5*canvas.height - y) / CONFIG.scaleY;
