@@ -139,11 +139,11 @@ function mirrorY(shape) {
 }
 
 function shearY(shape, m) {
-	return (x, y) => shape(x, y-m*x)
+	return (x, y) => shape(x, y-m*x);
 }
 
 function shearX(shape, m) {
-	return (x, y) => shape(x-m*y, y)
+	return (x, y) => shape(x-m*y, y);
 }
 
 // OTHER
